@@ -468,23 +468,16 @@ p {
   font-size: 30px;
   color: #fff;
 }
+.education {
+  height: auto;
+
+  width: auto;
+}
 .timeline {
   position: relative;
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: auto;
   padding: 20px 0 50px 0;
-}
-.timeline {
-  position: relative;
-  max-width: 1200px;
-  margin: auto;
-}
-/* TIMELINE WRAPPER */
-.timeline {
-  position: relative;
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px 0;
 }
 
 .timeline::after {
@@ -508,7 +501,7 @@ p {
 
 /* LEFT POSITIONING */
 .left {
-  left: 0;
+  left: 81px;
 }
 
 /* RIGHT POSITIONING */
@@ -532,17 +525,17 @@ p {
 
 /* INDIVIDUAL ICONS */
 .timeline-container.left:nth-of-type(1)::after {
-  right: -17px;
-  background-image: url("/cutm.png");
+  right: -18px;
+  background-image: url("/image/cutm.png");
 }
 
 .timeline-container.right:nth-of-type(2)::after {
-  left: 0;
-  background-image: url("vikas logo.jpg");
+  left: -18px;
+  background-image: url("/image/vikas logo.jpg");
 }
 .timeline-container.left:nth-of-type(3)::after {
-  right: -17px;
-  background-image: url("Bse.odisha.logo.jpg");
+  right: -18px;
+  background-image: url("/image/Bse.odisha.logo.jpg");
 }
 /* CONTENT BOX STYLING */
 .content {
@@ -977,6 +970,15 @@ h1 {
     width: auto;
     height: auto;
   }
+  .education {
+    height: auto;
+
+    width: auto;
+  }
+  .skills-grid {
+    height: auto;
+    width: 100%;
+  }
   .port-card {
     width: 80%;
     row-gap: 20px;
@@ -1021,17 +1023,21 @@ h1 {
     width: 400px;
   }
   .left {
-    justify-content: right;
+    margin-left: -160px;
+    width: 100%;
+    height: auto;
   }
   .right {
-    left: 0;
+    left: 0px;
+    width: 100%;
+    height: auto;
   }
   .timeline-container.left:nth-of-type(1)::after {
     left: 0;
     position: absolute;
   }
   .timeline-container.right:nth-of-type(2)::after {
-    left: -18;
+    left: 0;
     position: absolute;
   }
   .timeline-container.left:nth-of-type(3)::after {
@@ -1047,6 +1053,8 @@ h1 {
     flex-direction: column;
     justify-content: center;
     row-gap: 20px;
+    height: auto;
+    width: 100%;
   }
   .row_2 {
     flex-direction: column;
@@ -1060,15 +1068,15 @@ h1 {
   }
   .skills-box {
     align-items: center;
-    width: 350px;
+    width: 100%;
     margin: 2px;
-    height: 320px;
+    height: auto;
   }
   .certificate {
     width: 85%;
   }
   .skills-innerbox {
-    gap: 20px;
+    gap: 0px;
   }
   .skill-tag {
     width: auto;
