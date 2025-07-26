@@ -526,16 +526,16 @@ p {
 /* INDIVIDUAL ICONS */
 .timeline-container.left:nth-of-type(1)::after {
   right: -18px;
-  background-image: url("/image/cutm.png");
+  background-image: url("image/cutm.png");
 }
 
 .timeline-container.right:nth-of-type(2)::after {
   left: -18px;
-  background-image: url("/image/vikas logo.jpg");
+  background-image: url("image/vikas logo.jpg");
 }
 .timeline-container.left:nth-of-type(3)::after {
   right: -18px;
-  background-image: url("/image/Bse.odisha.logo.jpg");
+  background-image: url("image/Bse.odisha.logo.jpg");
 }
 /* CONTENT BOX STYLING */
 .content {
