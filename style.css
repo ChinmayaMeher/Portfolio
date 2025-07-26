@@ -910,6 +910,13 @@ h1 {
   .about-image {
     height: 150px;
     width: 60%;
+    align-items: center;
+    height: auto;
+    width: 100%;
+  }
+  .about-image img {
+    height: 250px;
+    width: 200px;
   }
   .greet-heading {
     font-size: 18px;
@@ -944,7 +951,7 @@ h1 {
   .about-text {
     /* padding: 30px; */
     font-size: 10px;
-    margin-top: 80px;
+    /* margin-top: 80px; */
     width: 100%;
     height: auto;
     align-items: center;
@@ -1011,11 +1018,13 @@ h1 {
     align-items: center;
     justify-items: center;
   }
+
   .timeline::after {
     justify-content: left;
     left: 0;
     position: fixed;
     margin-top: 80px;
+    display: none;
   }
   .timeline-container {
     justify-content: right;
@@ -1048,6 +1057,7 @@ h1 {
     left: 0;
     position: fixed;
     margin-top: 80px;
+    display: none;
   }
   .row_1 {
     flex-direction: column;
