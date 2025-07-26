@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="prt.css" />
+    <link rel="stylesheet" href="prt.js" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">MyPortfolio</h1>
+        <nav>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section id="hero">
+      <div class="container">
+        <h2>Hi, I'm [Your Name]</h2>
+        <p>Web Developer | Designer | Creator</p>
+        <button onclick="scrollToSection('projects')">View Projects</button>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2>About Me</h2>
+        <p>
+          I am a passionate developer with experience in building responsive web
+          applications. I love creating beautiful and functional user
+          experiences.
+        </p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2>Projects</h2>
+        <div class="project-list">
+          <div class="project">
+            <h3>Project One</h3>
+            <p>Description of project one.</p>
+          </div>
+          <div class="project">
+            <h3>Project Two</h3>
+            <p>Description of project two.</p>
+          </div>
+          <!-- Add more projects -->
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2>Contact Me</h2>
+        <form id="contact-form">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 [Your Name]. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
