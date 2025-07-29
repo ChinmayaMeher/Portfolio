@@ -249,6 +249,7 @@ header {
   justify-content: left;
   margin-left: 50px;
   width: 100%;
+  text-decoration: none;
 }
 .dynamic-text {
   color: #00e1ff;
@@ -267,7 +268,11 @@ header {
   font-weight: 700;
   border: 1px solid #069bb9;
   font-size: 18px;
+  text-decoration: none;
   transition: all 1s ease; /* Corrected transition syntax */
+}
+a {
+  text-decoration: none;
 }
 
 .btn-1:hover {
