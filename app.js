@@ -105,3 +105,41 @@ revealElements.forEach((el) => {
   el.style.transition = "transform 0.1s linear, opacity 0.1s linear";
   el.style.transformOrigin = "bottom center"; // transforms grow from bottom
 });
+let currentSlide = 0;
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(index) {
+  if (index >= slides.length) currentSlide = 0;
+  else if (index < 0) currentSlide = slides.length - 1;
+  else currentSlide = index;
+
+  const offset = -currentSlide * 100;
+  document.querySelector(".slides").style.transform = `translateX(${offset}%)`;
+
+  dots.forEach((dot) => dot.classList.remove("active"));
+  dots[currentSlide].classList.add("active");
+}
+
+document.querySelector(".prev").addEventListener("click", () => {
+  showSlide(currentSlide - 1);
+});
+
+document.querySelector(".next").addEventListener("click", () => {
+  showSlide(currentSlide + 1);
+});
+
+dots.forEach((dot) => {
+  dot.addEventListener("click", (e) => {
+    const index = parseInt(e.target.getAttribute("data-slide"));
+    showSlide(index);
+  });
+});
+
+// Auto slide
+setInterval(() => {
+  showSlide(currentSlide + 1);
+}, 5000);
+
+// Initialize
+showSlide(0);
