@@ -380,6 +380,32 @@ p {
   margin-top: 20px;
   border-radius: 10px;
 }
+.project-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  bottom: 0px;
+}
+
+.project-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  background: #111827;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.project-links a:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.project-links i {
+  margin-right: 8px;
+}
 
 .services {
   display: flex;
