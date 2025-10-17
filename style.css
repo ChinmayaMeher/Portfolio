@@ -340,8 +340,10 @@ h2 {
 
 p {
   height: auto;
-  width: 100%;
-  font-size: 20px;
+  width: fit-content;
+  /* text-align: justify;
+  flex-wrap: initial; */
+  font-size: 15px;
   color: white;
   margin: 0;
 }
@@ -368,10 +370,16 @@ p {
   background-image: linear-gradient(180deg, #00f0ff, #18183a);
   box-shadow: rgb(0, 0, 0) 0px 0px 20px 0px;
   border-radius: 22px;
+  justify-items: center;
 }
 
 .port-card .image {
   width: 100%;
+}
+.port-card .image:hover {
+  transform: scale(1.08);
+  filter: brightness(1.2);
+  transition: all 1s linear;
 }
 
 .port-card .image img {
@@ -379,6 +387,13 @@ p {
   width: 90%;
   margin-top: 20px;
   border-radius: 10px;
+}
+#mini-box {
+  height: 110px;
+  width: 90%;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: transparent;
 }
 .project-links {
   margin-top: 15px;
