@@ -120,10 +120,18 @@
     <div class="portfolio">
       <div class="portfolio-heading">
         <h1 class="title">Featured Portfolio</h1>
+        
+        <div class="filter-tabs">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="frontend">Frontend Projects</button>
+          <button class="filter-btn" data-filter="fullstack">FULL stack Projects</button>
+          <button class="filter-btn" data-filter="aiml">AI / ML Projects</button>
+          <!-- <button class="filter-btn" data-filter="uiux">UI / UX Projects</button> -->
+        </div>
       </div>
       <div class="portfolio-content">
         <div class="my-row-1">
-          <div class="my-col">
+          <div class="my-col" data-category="frontend">
             <div class="port-card">
               <div class="image">
                 <img src="image/Ss_spotify.png" alt="spotify" />
@@ -148,7 +156,7 @@
             </div>
           </div>
 
-          <div class="my-col">
+          <div class="my-col" data-category="frontend">
             <div class="port-card">
               <div class="image">
                 <img
@@ -176,7 +184,7 @@
             </div>
           </div>
 
-          <div class="my-col">
+          <div class="my-col" data-category="frontend">
             <div class="port-card">
               <div class="image">
                 <img src="image/Tic Tac Toe.png" alt="SEO Image" />
@@ -203,7 +211,7 @@
 
         </div>
         <div class="my-row-2">
-          <div class="my-col">
+          <div class="my-col" data-category="frontend">
             <div class="port-card">
               <div class="image">
                 <img src="image/ss_timer.png" alt="" />
@@ -224,7 +232,7 @@
               </div>
             </div>
           </div>
-          <div class="my-col">
+          <div class="my-col" data-category="frontend">
             <div class="port-card">
               <div class="image">
                 <img
@@ -248,30 +256,70 @@
               </div>
             </div>
           </div>
-          <div class="my-col">
+          <div class="my-col" data-category="frontend">
             <div class="port-card">
               <div class="image">
                 <img
-                  src="image/work-in-progress.jpg"
+                  src="image/graph_sheet.png"
                   alt="Video Editing Image"
                 />
               </div>
-              <h3 class="greet-heading-text">Under Development</h3>
+              <h3 class="greet-heading-text">GridPixel Generator</h3>
               <div id="mini-box">
                <p class="small-para-text">This project card is reserved for my next creative build. It will be updated once the project is ready i will upload that.</p>
               
               </div>
               <!-- Buttons Section -->
               <div class="project-links">
-                <a href="" target="_blank">
+                <a href="https://chinmayameher.github.io/Graph-sheet-generator/" target="_blank">
                   <i class="fas fa-external-link-alt"></i> Live
                 </a>
-                <a href="" target="_blank">
+                <a href="https://github.com/ChinmayaMeher/Graph-sheet-generator" target="_blank">
                   <i class="fab fa-github"></i> GitHub
                 </a>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <!-- HIDDEN AI/ML PROJECT - only shows when filter clicked -->
+    <div class="my-col" data-category="aiml" style="display:none">
+      <div class="port-card">
+        <div class="image">
+          <img src="image/your-aiml-project.png" alt="AI Project" />
+        </div>
+        <h3 class="greet-heading-text">Your AI/ML Project Name</h3>
+        <div id="mini-box">
+          <p class="small-para-text">Description of your AI/ML project here.</p>
+        </div>
+        <div class="project-links">
+          <a href="your-live-link" target="_blank">
+            <i class="fas fa-external-link-alt"></i> Live
+          </a>
+          <a href="your-github-link" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- HIDDEN FULL STACK PROJECT -->
+    <div class="my-col" data-category="fullstack" style="display:none">
+      <div class="port-card">
+        <div class="image">
+          <img src="image/your-fullstack-project.png" alt="Full Stack Project" />
+        </div>
+        <h3 class="greet-heading-text">Your Full Stack Project Name</h3>
+        <div id="mini-box">
+          <p class="small-para-text">Description of your Full Stack project here.</p>
+        </div>
+        <div class="project-links">
+          <a href="your-live-link" target="_blank">
+            <i class="fas fa-external-link-alt"></i> Live
+          </a>
+          <a href="your-github-link" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+          </a>
         </div>
       </div>
     </div>
@@ -475,19 +523,19 @@
             </div>
             <!-- Slide 3 -->
             <div class="slide">
-              <img src="slide3.png" alt="Slide 3">
+              <img src="image/GFG_CUTM_page-0001.jpg" alt="Slide 3">
             </div>
             <!-- Slide 4 -->
             <div class="slide">
-              <img src="slide4.png" alt="Slide 3">
+              <img src="image/Nation skill up certificate_page-0001.jpg" alt="Slide 3">
             </div>
             <!-- Slide 5 -->
             <div class="slide">
-              <img src="slide5.png" alt="Slide 3">
+              <img src="image/Hack2skill-Certificate.png" alt="Slide 3">
             </div>
             <!-- Slide 6 -->
             <div class="slide">
-              <img src="slide6.png" alt="Slide 3">
+              <img src="image/CHINMAYA_SAP_ABAP_CERTIFICATE.jpg" alt="Slide 3">
             </div>
           </div>
 

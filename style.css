@@ -8,7 +8,7 @@
 }
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #0f0f2f;
+  background-color: #0d0d0d;
 }
 /* @media (max-width: 888px) {
   body {
@@ -33,7 +33,7 @@ header {
   top: 0;
   width: 100%;
   /* background-image: linear-gradient(90deg, #eeee18, #53c8b6, #35a99c); */
-  background-color: #08081b;
+  background-color: #121212;
   z-index: 1000;
 }
 
@@ -291,14 +291,21 @@ a {
   /* z-index: -500; */
 }
 
-.about-image img {
+/* .about-image img {
   height: 25rem;
   border-top-left-radius: 10rem;
   border-top-right-radius: 10rem;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   box-shadow: 0 5px 40px 5px black;
+} */
+.about-image img {
+  width: 280px;
+  height: 320px;
+  border-radius: 24px;
+  object-fit: cover;
+  border: 3px solid #1e1e1e;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
-
 /* Add animation on hover */
 .about-image img:hover {
   animation: tiltRotate 1.5s infinite ease-in-out alternate;
@@ -655,7 +662,7 @@ h1 {
 /* === STYLES FOR SKILLS SECTION === */
 .skills-section {
   padding: 50px 20px;
-  background-color: #0f0f2f;
+  background-color: transparent;
   color: #fff;
   text-align: center;
 }
@@ -779,7 +786,7 @@ section {
   height: 400px;
   width: 95%;
   border-radius: 20px;
-  background: linear-gradient(to right, #0f0f2f, #00e1ff, #0f0f2f);
+  background: linear-gradient(to right, #0d0d0d, #00e1ff, #0d0d0d);
   align-items: center;
   justify-items: center;
 }
@@ -987,7 +994,7 @@ section {
 .footer {
   height: 80px;
   width: 100%;
-  background-color: #08081b;
+  background-color: #151515;
   color: #fff;
   position: relative;
   bottom: 0;
@@ -1010,6 +1017,38 @@ section {
 }
 .h2 {
   color: #fff;
+}
+
+/* Filter Tab Buttons */
+.filter-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0 30px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 24px;
+  border: 2px solid cyan;
+  background: transparent;
+  color: cyan;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: cyan;
+  color: #000;
+  font-weight: bold;
+}
+
+/* Hide non-matching cards */
+.my-col.hidden {
+  display: none;
 }
 
 @media (min-width: 320px) and (max-width: 888px) {

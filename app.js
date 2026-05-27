@@ -143,3 +143,47 @@ setInterval(() => {
 
 // Initialize
 showSlide(0);
+// Portfolio Filter Tabs
+const filterBtns = document.querySelectorAll(".filter-btn");
+
+filterBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // Update active button
+    filterBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const filter = btn.getAttribute("data-filter");
+    const allCols = document.querySelectorAll(".my-col");
+
+    allCols.forEach((col) => {
+      const category = col.getAttribute("data-category");
+
+      if (filter === "all") {
+        // All button → show only frontend, hide aiml + fullstack
+        if (category === "frontend") {
+          col.style.display = "";
+        } else {
+          col.style.display = "none";
+        }
+      } else if (filter === "frontend") {
+        if (category === "frontend") {
+          col.style.display = "";
+        } else {
+          col.style.display = "none";
+        }
+      } else if (filter === "fullstack") {
+        if (category === "fullstack") {
+          col.style.display = "";
+        } else {
+          col.style.display = "none";
+        }
+      } else if (filter === "aiml") {
+        if (category === "aiml") {
+          col.style.display = "";
+        } else {
+          col.style.display = "none";
+        }
+      }
+    });
+  });
+});
