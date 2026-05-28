@@ -1144,6 +1144,7 @@ body.cursor-hover .cursor-ring {
   display: flex;
   gap: 8px;
 }
+
 .cert-dot {
   width: 8px;
   height: 8px;
@@ -1151,6 +1152,14 @@ body.cursor-hover .cursor-ring {
   background: var(--text-3);
   transition: background var(--transition), width var(--transition);
   cursor: pointer;
+}
+.cert-dots {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
 }
 .cert-dot.active {
   background: var(--accent);
@@ -1280,6 +1289,7 @@ body.cursor-hover .cursor-ring {
 .footer p {
   color: var(--text-3);
   font-size: 0.85rem;
+  margin-left: 10rem;
 }
 .footer-socials {
   display: flex;
