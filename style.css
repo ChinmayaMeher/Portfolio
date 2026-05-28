@@ -1305,6 +1305,13 @@ body.cursor-hover .cursor-ring {
     grid-template-columns: 1fr;
     gap: 48px;
   }
+
+  .hero-visual {
+    display: flex;
+    order: -1;
+    margin-bottom: 30px;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     padding-top: 140px;
