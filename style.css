@@ -664,6 +664,7 @@ body.cursor-hover .cursor-ring {
   color: var(--text-2);
   margin-bottom: 16px;
   font-size: 1.02rem;
+  text-align: justify;
 }
 .about-para strong {
   color: var(--text);
@@ -675,26 +676,34 @@ body.cursor-hover .cursor-ring {
   margin-top: 40px;
 }
 .stat-item {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: baseline;
+  border-left: 3px solid var(--accent);
+  padding-left: 16px;
 }
 .stat-num {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 2.8rem;
-  font-weight: 800;
-  color: var(--accent);
+  font-weight: 700;
+  color: var(--white);
   line-height: 1;
 }
 .stat-plus {
-  font-size: 1.5rem;
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--accent);
+  margin-left: 4px;
 }
 .stat-label {
+  grid-column: 1 / -1;
   font-size: 0.8rem;
-  color: var(--text-3);
-  letter-spacing: 1px;
+  color: var(--text-2);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-top: 4px;
+  margin-top: 8px;
+  font-weight: 600;
 }
 
 .about-cards {
@@ -1340,6 +1349,9 @@ body.cursor-hover .cursor-ring {
     transform: translateY(-110%);
     transition: transform var(--transition);
     border-bottom: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
   .nav-links.open {
     transform: translateY(0);

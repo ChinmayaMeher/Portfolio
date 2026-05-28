@@ -30,9 +30,16 @@
   .about-grid {
     gap: 120px;
   }
-  .stat-num {
-    font-size: 4rem;
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Forces exactly 3 columns in one row */
+    gap: 8px; /* Reduces the gap to fit small screens */
+    width: 100%;
   }
+
   .projects-grid {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 36px;
@@ -376,13 +383,30 @@
   .about-left {
     text-align: center;
   }
+
   .about-stats {
-    gap: 24px;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Forces exactly 3 columns in one row */
+    gap: 8px; /* Reduces the gap to fit small screens */
+    width: 100%;
+  }
+  .stat-item {
+    padding-left: 8px; /* Shrinks the space next to the accent line */
+    border-left-width: 2px; /* Makes the line slightly thinner for mobile */
   }
   .stat-num {
-    font-size: 2.2rem;
+    font-size: 1.5rem; /* Scales down the main number */
+  }
+  .stat-plus {
+    font-size: 1rem; /* Scales down the + and % symbols */
+  }
+  .stat-label {
+    font-size: 0.6rem; /* Scales down the text label */
+    letter-spacing: 0.5px; /* Tightens the letters so words like 'CERTIFICATIONS' fit */
+    margin-top: 4px;
   }
   .about-cards {
     grid-template-columns: 1fr;
@@ -694,7 +718,7 @@
     font-size: 1.2rem;
   }
   .stat-label {
-    font-size: 0.72rem;
+    font-size: 10px;
   }
   .about-para {
     font-size: 0.95rem;
@@ -1026,6 +1050,7 @@
   }
   .stat-num {
     font-size: 1.5rem;
+    margin-left: 12px;
   }
   .info-card {
     padding: 12px;
