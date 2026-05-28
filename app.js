@@ -1,189 +1,263 @@
-// Toggle Navbar on Hamburger Click
-const hamburger = document.getElementById("hamburger");
-const menu = document.querySelector(".menu");
-const barsIcon = document.querySelector(".hamburger-icon");
-const crossIcon = document.querySelector(".cross-icon");
+/* =============================================
+   CHINMAYA MEHER — Portfolio Advanced JS
+   ============================================= */
 
-hamburger.addEventListener("click", () => {
-  menu.classList.toggle("show-menu");
-  barsIcon.classList.toggle("hide-icon");
-  crossIcon.classList.toggle("show-icon");
+// ---- Custom Cursor ----
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorRing = document.querySelector(".cursor-ring");
+let mouseX = 0,
+  mouseY = 0,
+  ringX = 0,
+  ringY = 0;
+
+document.addEventListener("mousemove", (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursorDot.style.left = mouseX + "px";
+  cursorDot.style.top = mouseY + "px";
 });
 
-// Smooth Scroll for Anchor Links
-const links = document.querySelectorAll(".links");
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + "px";
+  cursorRing.style.top = ringY + "px";
+  requestAnimationFrame(animateRing);
+}
+animateRing();
 
-links.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const targetId = link.getAttribute("href");
-    document.querySelector(targetId).scrollIntoView({ behavior: "smooth" });
-    menu.classList.remove("show-menu");
-    barsIcon.classList.remove("hide-icon");
-    crossIcon.classList.remove("show-icon");
+document
+  .querySelectorAll("a, button, .project-card, .info-card, .skill-pills span")
+  .forEach((el) => {
+    el.addEventListener("mouseenter", () =>
+      document.body.classList.add("cursor-hover")
+    );
+    el.addEventListener("mouseleave", () =>
+      document.body.classList.remove("cursor-hover")
+    );
+  });
+
+// ---- Navbar: scroll effect + active link ----
+const navbar = document.getElementById("navbar");
+const navLinks = document.querySelectorAll(".nav-link");
+const sections = document.querySelectorAll("section[id]");
+
+window.addEventListener("scroll", () => {
+  navbar.classList.toggle("scrolled", window.scrollY > 40);
+
+  // Highlight active nav link
+  let current = "";
+  sections.forEach((sec) => {
+    if (window.scrollY >= sec.offsetTop - 100) current = sec.getAttribute("id");
+  });
+  navLinks.forEach((link) => {
+    link.classList.toggle(
+      "active",
+      link.getAttribute("href") === "#" + current
+    );
   });
 });
 
-// Dynamic Typing Text (using simple custom logic)
+// ---- Hamburger Menu ----
+const hamburger = document.getElementById("hamburger");
+const navLinksMenu = document.getElementById("navLinks");
+
+hamburger.addEventListener("click", () => {
+  navLinksMenu.classList.toggle("open");
+  const spans = hamburger.querySelectorAll("span");
+  const isOpen = navLinksMenu.classList.contains("open");
+  spans[0].style.transform = isOpen ? "rotate(45deg) translate(5px, 5px)" : "";
+  spans[1].style.opacity = isOpen ? "0" : "1";
+  spans[2].style.transform = isOpen
+    ? "rotate(-45deg) translate(5px, -5px)"
+    : "";
+});
+
+// Close on nav-link click
+document.querySelectorAll(".nav-link").forEach((link) => {
+  link.addEventListener("click", () => {
+    navLinksMenu.classList.remove("open");
+    hamburger.querySelectorAll("span").forEach((s) => {
+      s.style.transform = "";
+      s.style.opacity = "1";
+    });
+  });
+});
+
+// ---- Dynamic Typing Effect ----
 const dynamicText = document.querySelector(".dynamic-text");
 const roles = [
-  "frontend Developer",
+  "Frontend Developer",
   "AI/ML Learner",
   "UI/UX Designer",
   "Video Editor",
 ];
-let wordIndex = 0;
-let letterIndex = 0;
-let isDeleting = false;
+let wordIdx = 0,
+  letterIdx = 0,
+  deleting = false;
 
-function typeEffect() {
-  const currentRole = roles[wordIndex];
-  if (isDeleting) {
-    dynamicText.textContent = currentRole.substring(0, letterIndex--);
-    if (letterIndex < 0) {
-      isDeleting = false;
-      wordIndex = (wordIndex + 1) % roles.length;
-    }
-  } else {
-    dynamicText.textContent = currentRole.substring(0, letterIndex++);
-    if (letterIndex > currentRole.length) {
-      isDeleting = true;
-    }
+function type() {
+  const role = roles[wordIdx];
+  dynamicText.textContent = deleting
+    ? role.substring(0, letterIdx--)
+    : role.substring(0, letterIdx++);
+
+  if (!deleting && letterIdx > role.length) {
+    deleting = true;
+    setTimeout(type, 1500);
+    return;
   }
-  setTimeout(typeEffect, isDeleting ? 100 : 150);
+  if (deleting && letterIdx < 0) {
+    deleting = false;
+    wordIdx = (wordIdx + 1) % roles.length;
+  }
+  setTimeout(type, deleting ? 60 : 100);
 }
-typeEffect();
+type();
 
-// Optional: Scroll Reveal Animations using Intersection Observer
-const sections = document.querySelectorAll(
-  ".portfolio, .about-text, .education, .contact"
-);
-
-const observer = new IntersectionObserver(
+// ---- Scroll Reveal (Intersection Observer) ----
+const revealEls = document.querySelectorAll(".reveal");
+const revealObserver = new IntersectionObserver(
   (entries) => {
-    entries.forEach((entry) => {
+    entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
+        // Stagger siblings
+        const siblings = [
+          ...entry.target.parentElement.querySelectorAll(".reveal"),
+        ];
+        const delay = siblings.indexOf(entry.target) * 80;
+        setTimeout(() => entry.target.classList.add("visible"), delay);
+        revealObserver.unobserve(entry.target);
       }
     });
   },
-  {
-    threshold: 0.1,
-  }
+  { threshold: 0.1 }
 );
-// Apply scroll reveal with linear scaling from narrow to wider at bottom
 
-window.addEventListener("scroll", () => {
-  const revealElements = document.querySelectorAll(
-    "section, .skills-box, .contact, .about-text, .portfolio, .education"
-  );
+revealEls.forEach((el) => revealObserver.observe(el));
 
-  revealElements.forEach((el) => {
-    const rect = el.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    if (rect.top < windowHeight && rect.bottom > 0) {
-      const visibleRatio =
-        1 - Math.min(Math.max(rect.top / windowHeight, 0), 1);
-      const scaleX = 0.8 + visibleRatio * 0.2; // from narrow to full width
-      el.style.transform = `scaleX(${scaleX})`;
-      el.style.opacity = visibleRatio;
-    } else {
-      el.style.transform = "scaleX(0.05)";
-      el.style.opacity = 0;
-    }
-  });
-});
-
-// Initial setup for smooth animation
-const revealElements = document.querySelectorAll(
-  "section, .skills-box, .contact, .about-text, .portfolio, .education"
+// ---- Counter Animation ----
+const statNums = document.querySelectorAll(".stat-num");
+const counterObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.dataset.target;
+        let current = 0;
+        const step = target / 50;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            el.textContent = target;
+            clearInterval(timer);
+          } else el.textContent = Math.floor(current);
+        }, 30);
+        counterObserver.unobserve(el);
+      }
+    });
+  },
+  { threshold: 0.5 }
 );
-revealElements.forEach((el) => {
-  el.style.transform = "scaleX(0.1)";
-  el.style.opacity = 0;
-  el.style.transition = "transform 0.1s linear, opacity 0.1s linear";
-  el.style.transformOrigin = "bottom center"; // transforms grow from bottom
-});
-let currentSlide = 0;
-const slides = document.querySelectorAll(".slide");
-const dots = document.querySelectorAll(".dot");
+statNums.forEach((el) => counterObserver.observe(el));
 
-function showSlide(index) {
-  if (index >= slides.length) currentSlide = 0;
-  else if (index < 0) currentSlide = slides.length - 1;
-  else currentSlide = index;
-
-  const offset = -currentSlide * 100;
-  document.querySelector(".slides").style.transform = `translateX(${offset}%)`;
-
-  dots.forEach((dot) => dot.classList.remove("active"));
-  dots[currentSlide].classList.add("active");
-}
-
-document.querySelector(".prev").addEventListener("click", () => {
-  showSlide(currentSlide - 1);
-});
-
-document.querySelector(".next").addEventListener("click", () => {
-  showSlide(currentSlide + 1);
-});
-
-dots.forEach((dot) => {
-  dot.addEventListener("click", (e) => {
-    const index = parseInt(e.target.getAttribute("data-slide"));
-    showSlide(index);
-  });
-});
-
-// Auto slide
-setInterval(() => {
-  showSlide(currentSlide + 1);
-}, 5000);
-
-// Initialize
-showSlide(0);
-// Portfolio Filter Tabs
+// ---- Portfolio Filter ----
 const filterBtns = document.querySelectorAll(".filter-btn");
+const projectCards = document.querySelectorAll(".project-card");
 
 filterBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
-    // Update active button
     filterBtns.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
+    const filter = btn.dataset.filter;
 
-    const filter = btn.getAttribute("data-filter");
-    const allCols = document.querySelectorAll(".my-col");
-
-    allCols.forEach((col) => {
-      const category = col.getAttribute("data-category");
-
-      if (filter === "all") {
-        // All button → show only frontend, hide aiml + fullstack
-        if (category === "frontend") {
-          col.style.display = "";
-        } else {
-          col.style.display = "none";
-        }
-      } else if (filter === "frontend") {
-        if (category === "frontend") {
-          col.style.display = "";
-        } else {
-          col.style.display = "none";
-        }
-      } else if (filter === "fullstack") {
-        if (category === "fullstack") {
-          col.style.display = "";
-        } else {
-          col.style.display = "none";
-        }
-      } else if (filter === "aiml") {
-        if (category === "aiml") {
-          col.style.display = "";
-        } else {
-          col.style.display = "none";
-        }
+    projectCards.forEach((card, i) => {
+      const cat = card.dataset.category;
+      const match = cat === filter;
+      card.style.transition = `opacity 0.35s ease ${
+        i * 40
+      }ms, transform 0.35s ease ${i * 40}ms`;
+      if (match) {
+        card.style.display = "";
+        requestAnimationFrame(() => {
+          card.style.opacity = "1";
+          card.style.transform = "";
+        });
+      } else {
+        card.style.opacity = "0";
+        card.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          card.style.display = "none";
+        }, 380 + i * 40);
       }
     });
+  });
+});
+
+// ---- Initialize portfolio (show frontend by default) ----
+projectCards.forEach((card) => {
+  if (card.dataset.category !== "frontend") {
+    card.style.display = "none";
+    card.style.opacity = "0";
+  }
+});
+
+// ---- Certification Slider ----
+const certSlider = document.getElementById("certSlider");
+const certPrev = document.getElementById("certPrev");
+const certNext = document.getElementById("certNext");
+const certDotsWrap = document.getElementById("certDots");
+const certSlides = document.querySelectorAll(".cert-slide");
+let certIdx = 0;
+
+// Create dots
+certSlides.forEach((_, i) => {
+  const dot = document.createElement("span");
+  dot.classList.add("cert-dot");
+  if (i === 0) dot.classList.add("active");
+  dot.addEventListener("click", () => goCert(i));
+  certDotsWrap.appendChild(dot);
+});
+
+function goCert(idx) {
+  certIdx = (idx + certSlides.length) % certSlides.length;
+  certSlider.style.transform = `translateX(-${certIdx * 100}%)`;
+  document
+    .querySelectorAll(".cert-dot")
+    .forEach((d, i) => d.classList.toggle("active", i === certIdx));
+}
+
+certPrev.addEventListener("click", () => goCert(certIdx - 1));
+certNext.addEventListener("click", () => goCert(certIdx + 1));
+setInterval(() => goCert(certIdx + 1), 5000);
+
+// ---- Keyboard slider support ----
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") goCert(certIdx - 1);
+  if (e.key === "ArrowRight") goCert(certIdx + 1);
+});
+
+// ---- Touch swipe for cert slider ----
+let touchStartX = 0;
+certSlider.addEventListener(
+  "touchstart",
+  (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  },
+  { passive: true }
+);
+certSlider.addEventListener("touchend", (e) => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) goCert(certIdx + (diff > 0 ? 1 : -1));
+});
+
+// ---- Smooth anchor scrolling (in case JS override needed) ----
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", (e) => {
+    const target = document.querySelector(anchor.getAttribute("href"));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   });
 });
