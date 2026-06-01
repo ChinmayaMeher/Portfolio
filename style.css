@@ -1394,45 +1394,6 @@ body.cursor-hover .cursor-ring {
   .section-pad {
     padding: 70px 5vw;
   }
-  /* AFTER */
-  /* .nav-links {
-    position: fixed !important;
-    top: 72px;
-    right: 0 !important;
-    bottom: 0 !important;
-    left: unset !important;
-    width: 55% !important;
-    min-width: 180px !important;
-    height: calc(100vh - 72px);
-    background: #080c10 !important;
-    isolation: isolate !important;
-    overflow: hidden !important;
-    border-bottom-left-radius: 30px;
-    border-top-left-radius: 30px;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    padding: 90px 20px 40px !important;
-    gap: 6px !important;
-    margin: 0 !important;
-    transform: translateX(100%) !important;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.8) !important;
-    z-index: 999 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-  .nav-links.open {
-    transform: translateX(0) !important;
-    opacity: 1 !important;
-    z-index: 100000 !important;
-    top: 100%;
-    max-height: fit-content;
-    max-width: fit-content;
-  } */
 
   .nav-links {
     position: fixed !important;
@@ -1496,7 +1457,7 @@ body.cursor-hover .cursor-ring {
   }
   .nav-links .nav-link:hover,
   .nav-links .nav-link.active {
-    color: #ffffff;
+    color: #ddfeff;
     background: rgba(242, 47, 47, 0.06);
   }
 }
@@ -1504,7 +1465,7 @@ body.cursor-hover .cursor-ring {
   width: auto;
   padding: 12px 16px;
   font-size: 1rem;
-  color: #e1cccc;
+  color: #ccdfe1;
   border-radius: 10px;
   display: block;
   right: auto;

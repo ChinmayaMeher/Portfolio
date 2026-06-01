@@ -311,13 +311,13 @@
     isolation: isolate !important;
     overflow-y: auto !important;
     border-bottom-left-radius: 30px;
-    border-top-left-radius: 0 !important; /* Makes it sit flush against the navbar */
+    border-top-left-radius: 30px; /* Makes it sit flush against the navbar */
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
     padding: 30px 20px 40px !important; /* Reduced padding since it's lower now */
-    gap: 6px !important;
+    gap: 3px !important;
     margin: 0 !important;
     transform: translateX(100%) !important;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
