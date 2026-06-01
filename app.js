@@ -64,6 +64,7 @@ const navLinksMenu = document.getElementById("navLinks");
 
 hamburger.addEventListener("click", () => {
   navLinksMenu.classList.toggle("open");
+  navOverlay.classList.toggle("active"); // ← ADD THIS LINE
   const spans = hamburger.querySelectorAll("span");
   const isOpen = navLinksMenu.classList.contains("open");
   spans[0].style.transform = isOpen ? "rotate(45deg) translate(5px, 5px)" : "";
@@ -72,7 +73,6 @@ hamburger.addEventListener("click", () => {
     ? "rotate(-45deg) translate(5px, -5px)"
     : "";
 });
-
 // Close on nav-link click
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", () => {
@@ -81,6 +81,15 @@ document.querySelectorAll(".nav-link").forEach((link) => {
       s.style.transform = "";
       s.style.opacity = "1";
     });
+  });
+});
+
+navOverlay.addEventListener("click", () => {
+  navLinksMenu.classList.remove("open");
+  navOverlay.classList.remove("active");
+  hamburger.querySelectorAll("span").forEach((s) => {
+    s.style.transform = "";
+    s.style.opacity = "1";
   });
 });
 

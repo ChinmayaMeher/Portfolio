@@ -299,21 +299,34 @@
     height: 64px;
   }
   .nav-links {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    background: var(--bg-2);
-    flex-direction: column;
-    padding: 20px 5vw;
-    gap: 4px;
-    transform: translateY(-110%);
-    transition: transform var(--transition);
-    border-bottom: 1px solid var(--border);
-    z-index: 999;
-  }
-  .nav-links.open {
-    transform: translateY(0);
+    position: fixed !important;
+    top: 56px !important; /* Starts exactly below your mobile navbar */
+    right: 0 !important;
+    bottom: 0 !important;
+    left: unset !important;
+    width: 55% !important;
+    min-width: 180px !important;
+    height: fit-content !important; /* Fills the rest of the screen */
+    background: #080c10 !important;
+    isolation: isolate !important;
+    overflow-y: auto !important;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 0 !important; /* Makes it sit flush against the navbar */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: 30px 20px 40px !important; /* Reduced padding since it's lower now */
+    gap: 6px !important;
+    margin: 0 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.8) !important;
+    z-index: 998 !important; /* Ensures it stays behind other top-level elements */
+    opacity: 0.8 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
   }
   .nav-link {
     padding: 12px 16px;
@@ -323,6 +336,7 @@
   }
   .hamburger {
     display: flex;
+    z-index: 500;
   }
   .btn-hire {
     display: none;
@@ -647,8 +661,7 @@
     padding: 0 4.5vw;
   }
   .nav-links {
-    top: 60px;
-    padding: 16px 4.5vw;
+    padding: 90px 16px 40px;
   }
   .nav-logo {
     font-size: 1.4rem;
@@ -1011,8 +1024,7 @@
     padding: 0 3.5vw;
   }
   .nav-links {
-    top: 56px;
-    padding: 14px 3.5vw;
+    padding: 90px 14px 40px;
   }
   .nav-logo {
     font-size: 1.2rem;
@@ -1190,7 +1202,7 @@
   }
   /* Nav mobile menu compact */
   .nav-links {
-    padding: 12px 5vw;
+    padding: 80px 16px 20px;
     gap: 2px;
   }
   .nav-link {
