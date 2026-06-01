@@ -41,6 +41,7 @@ document
 const navbar = document.getElementById("navbar");
 const navLinks = document.querySelectorAll(".nav-link");
 const sections = document.querySelectorAll("section[id]");
+const navOverlay = document.getElementById("navOverlay");
 
 window.addEventListener("scroll", () => {
   navbar.classList.toggle("scrolled", window.scrollY > 40);
@@ -77,6 +78,7 @@ hamburger.addEventListener("click", () => {
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", () => {
     navLinksMenu.classList.remove("open");
+    navOverlay.classList.remove("active");
     hamburger.querySelectorAll("span").forEach((s) => {
       s.style.transform = "";
       s.style.opacity = "1";

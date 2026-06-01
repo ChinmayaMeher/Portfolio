@@ -36,7 +36,7 @@
 }
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 90px;
 }
 body {
   font-family: var(--font-body);
@@ -98,6 +98,11 @@ button {
     border-color 0.3s, transform 0.15s;
   opacity: 0.5;
 }
+.cursor-dot,
+.cursor-ring,
+.noise-overlay {
+  pointer-events: none !important;
+}
 body.cursor-hover .cursor-dot {
   width: 14px;
   height: 14px;
@@ -123,6 +128,7 @@ body.cursor-hover .cursor-ring {
 /* ---- SECTION UTILS ---- */
 .section-pad {
   padding: 100px 6vw;
+  scroll-margin-top: 90px;
 }
 .section-label {
   font-size: 12px;
