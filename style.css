@@ -899,7 +899,7 @@ body.cursor-hover .cursor-ring {
   height: 46px;
   border-radius: 50%;
   background: var(--accent);
-  color: #000;
+  color: #010101;
   display: flex;
   align-items: center;
   justify-content: center;
