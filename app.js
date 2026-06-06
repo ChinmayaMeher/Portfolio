@@ -99,10 +99,10 @@ navOverlay.addEventListener("click", () => {
 // ---- Dynamic Typing Effect ----
 const dynamicText = document.querySelector(".dynamic-text");
 const roles = [
-  "Frontend Developer",
+  "MERN Stack Developer",
   "AI/ML Learner",
-  "UI/UX Designer",
-  "Video Editor",
+  "Python Backend Developer",
+  "Computer Vision Practitioner",
 ];
 let wordIdx = 0,
   letterIdx = 0,
@@ -278,9 +278,9 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     const target = document.querySelector(anchor.getAttribute("href"));
     if (target) {
       e.preventDefault();
-      
+
       const isMobileMenuOpen = navLinksMenu.classList.contains("open");
-      
+
       if (isMobileMenuOpen) {
         // 1. Instantly close the menu and overlay
         navLinksMenu.classList.remove("open");
@@ -289,7 +289,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
           s.style.transform = "";
           s.style.opacity = "1";
         });
-        
+
         // 2. Delay the smooth scroll so the panel transition has time to process
         // without mobile browsers aborting the scroll animation.
         setTimeout(() => {

@@ -1343,7 +1343,6 @@ body.cursor-hover .cursor-ring {
 .footer p {
   color: var(--text-3);
   font-size: 0.85rem;
-  margin-left: 10rem;
 }
 .footer-socials {
   display: flex;
