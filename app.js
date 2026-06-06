@@ -1,5 +1,5 @@
 /* =============================================
-   CHINMAYA MEHER — Portfolio Advanced JS
+   CHINMAYA MEHER — Portfolio Advanced JS (FIXED)
    ============================================= */
 
 // ---- Custom Cursor ----
@@ -65,7 +65,7 @@ const navLinksMenu = document.getElementById("navLinks");
 
 hamburger.addEventListener("click", () => {
   navLinksMenu.classList.toggle("open");
-  navOverlay.classList.toggle("active"); // ← ADD THIS LINE
+  navOverlay.classList.toggle("active");
   const spans = hamburger.querySelectorAll("span");
   const isOpen = navLinksMenu.classList.contains("open");
   spans[0].style.transform = isOpen ? "rotate(45deg) translate(5px, 5px)" : "";
@@ -74,6 +74,7 @@ hamburger.addEventListener("click", () => {
     ? "rotate(-45deg) translate(5px, -5px)"
     : "";
 });
+
 // Close on nav-link click
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", () => {
@@ -130,9 +131,8 @@ type();
 const revealEls = document.querySelectorAll(".reveal");
 const revealObserver = new IntersectionObserver(
   (entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        // Stagger siblings
         const siblings = [
           ...entry.target.parentElement.querySelectorAll(".reveal"),
         ];
@@ -185,11 +185,18 @@ filterBtns.forEach((btn) => {
     projectCards.forEach((card, i) => {
       const cat = card.dataset.category;
       const match = cat === filter;
+
+      // Clear any pending timeout execution to avoid race conditions
+      if (card.hideTimeout) clearTimeout(card.hideTimeout);
+
       card.style.transition = `opacity 0.35s ease ${
         i * 40
       }ms, transform 0.35s ease ${i * 40}ms`;
+
       if (match) {
         card.style.display = "";
+        // Force the layout engine to handle animation cleanly and bypass observer limits
+        card.classList.add("visible");
         requestAnimationFrame(() => {
           card.style.opacity = "1";
           card.style.transform = "";
@@ -197,7 +204,7 @@ filterBtns.forEach((btn) => {
       } else {
         card.style.opacity = "0";
         card.style.transform = "scale(0.95)";
-        setTimeout(() => {
+        card.hideTimeout = setTimeout(() => {
           card.style.display = "none";
         }, 380 + i * 40);
       }
@@ -210,6 +217,9 @@ projectCards.forEach((card) => {
   if (card.dataset.category !== "frontend") {
     card.style.display = "none";
     card.style.opacity = "0";
+  } else {
+    // Frontend items should immediately be visible if already in viewport range
+    card.classList.add("visible");
   }
 });
 
@@ -262,13 +272,33 @@ certSlider.addEventListener("touchend", (e) => {
   if (Math.abs(diff) > 50) goCert(certIdx + (diff > 0 ? 1 : -1));
 });
 
-// ---- Smooth anchor scrolling (in case JS override needed) ----
+// ---- Smooth anchor scrolling ----
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", (e) => {
     const target = document.querySelector(anchor.getAttribute("href"));
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      
+      const isMobileMenuOpen = navLinksMenu.classList.contains("open");
+      
+      if (isMobileMenuOpen) {
+        // 1. Instantly close the menu and overlay
+        navLinksMenu.classList.remove("open");
+        navOverlay.classList.remove("active");
+        hamburger.querySelectorAll("span").forEach((s) => {
+          s.style.transform = "";
+          s.style.opacity = "1";
+        });
+        
+        // 2. Delay the smooth scroll so the panel transition has time to process
+        // without mobile browsers aborting the scroll animation.
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      } else {
+        // If menu is not open (e.g. desktop), scroll immediately
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   });
 });

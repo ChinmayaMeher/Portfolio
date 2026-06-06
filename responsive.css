@@ -323,7 +323,7 @@
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: -12px 0 40px rgba(0, 0, 0, 0.8) !important;
-    z-index: 998 !important; /* Ensures it stays behind other top-level elements */
+    z-index: 99999 !important; /* Above overlay (99998) but below logo (100000) */
     opacity: 0.8 !important;
     visibility: visible !important;
     pointer-events: auto !important;
@@ -1270,5 +1270,17 @@
   .reveal {
     opacity: 1;
     transform: none;
+  }
+}
+/* Disable and hide custom cursor elements on mobile/touch screens */
+@media (max-width: 991px), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+
+  /* Reset body cursor behavior for mobile touch */
+  body {
+    cursor: default !important;
   }
 }
