@@ -11,13 +11,13 @@
   --bg-2: #0d1117;
   --bg-3: #111820;
   --surface: #141c24;
-  --border: rgba(255, 255, 255, 0.08);
+  --border: rgba(10, 5, 5, 0.08);
   --accent: #00d4ff;
   --accent-2: #7c3aed;
-  --accent-glow: rgba(0, 212, 255, 0.18);
+  --accent-glow: rgba(11, 197, 235, 0.18);
   --text: #e8edf2;
   --text-2: #8b99a8;
-  --text-3: #4a5568;
+  --text-3: #58667d;
   --white: #ffffff;
   --font-display: "Syne", sans-serif;
   --font-body: "DM Sans", sans-serif;
