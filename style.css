@@ -3,7 +3,7 @@
    Advanced Professional Theme
    =========================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap");
 
 /* ---- CSS VARIABLES ---- */
 :root {
@@ -11,7 +11,7 @@
   --bg-2: #111111;
   --bg-3: #1a1a1a;
   --surface: rgba(255, 255, 255, 0.04);
-  --border: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.1);
   --accent: #00ffaa;
   --accent-2: #00aaff;
   --accent-glow: rgba(0, 255, 170, 0.15);
@@ -19,10 +19,11 @@
   --text-2: #a1a1aa;
   --text-3: #52525b;
   --white: #ffffff;
-  --font-display: "Syne", sans-serif;
-  --font-body: "DM Sans", sans-serif;
-  --radius: 16px;
-  --radius-lg: 24px;
+  --font-display: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --radius: 12px;
+  --radius-lg: 20px;
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -330,12 +331,12 @@ body.cursor-hover .cursor-ring {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.3;
+  opacity: 0.15;
 }
 .orb-1 {
   width: 520px;
   height: 520px;
-  background: radial-gradient(circle, #00d4ff 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
   top: -100px;
   left: -100px;
   animation: orbFloat 8s ease-in-out infinite alternate;
@@ -343,7 +344,7 @@ body.cursor-hover .cursor-ring {
 .orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-2) 0%, transparent 60%);
   bottom: -80px;
   right: 10%;
   animation: orbFloat 10s ease-in-out infinite alternate-reverse;
@@ -361,11 +362,13 @@ body.cursor-hover .cursor-ring {
   position: absolute;
   inset: 0;
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0.025) 1px,
+      rgba(255, 255, 255, 0.03) 1px,
       transparent 1px
     ),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
 }
 
 .hero-content {
@@ -376,13 +379,16 @@ body.cursor-hover .cursor-ring {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(0, 212, 255, 0.08);
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  background: var(--surface);
+  border: 1px solid var(--accent-glow);
   border-radius: 50px;
   padding: 8px 18px;
   font-size: 0.82rem;
+  font-family: var(--font-mono);
   color: var(--accent);
   margin-bottom: 28px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   animation: fadeInUp 0.8s ease 0.2s both;
 }
 .tag-dot {
@@ -395,10 +401,10 @@ body.cursor-hover .cursor-ring {
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4);
+    box-shadow: 0 0 0 0 var(--accent-glow);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(0, 212, 255, 0);
+    box-shadow: 0 0 0 8px rgba(0, 255, 170, 0);
   }
 }
 
@@ -768,18 +774,22 @@ body.cursor-hover .cursor-ring {
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  transition: border-color var(--transition), transform var(--transition);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 .info-card:hover {
-  border-color: rgba(0, 212, 255, 0.3);
+  border-color: var(--accent);
   transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .card-icon {
   width: 42px;
   height: 42px;
   min-width: 42px;
   background: var(--accent-glow);
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  border: 1px solid var(--accent-glow);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -857,11 +867,14 @@ body.cursor-hover .cursor-ring {
     box-shadow var(--transition);
   position: relative;
   z-index: 1;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 .project-card:hover {
-  border-color: rgba(0, 212, 255, 0.3);
+  border-color: var(--accent);
   transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .card-img-wrap {
@@ -994,6 +1007,15 @@ body.cursor-hover .cursor-ring {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.skill-cat:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .skill-cat h4 {
   font-family: var(--font-display);
@@ -1015,13 +1037,15 @@ body.cursor-hover .cursor-ring {
 }
 .skill-pills span {
   padding: 7px 16px;
-  border-radius: 50px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   font-size: 0.82rem;
+  font-family: var(--font-mono);
   color: var(--text-2);
   transition: border-color var(--transition), color var(--transition),
     background var(--transition), transform var(--transition);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 .skill-pills span:hover {
   border-color: var(--accent);
