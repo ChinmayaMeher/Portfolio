@@ -195,13 +195,16 @@ body.cursor-hover .cursor-ring {
   justify-content: space-between;
   padding: 0 6vw;
   height: 72px;
-  background: rgba(8, 12, 16, 0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  transition: background var(--transition);
+  background: rgba(5, 5, 5, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  transition: background var(--transition), border-color var(--transition);
 }
 .navbar.scrolled {
-  background: rgba(8, 12, 16, 0.97);
+  background: rgba(5, 5, 5, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-logo {
@@ -236,17 +239,18 @@ body.cursor-hover .cursor-ring {
   z-index: auto;
 }
 .nav-link {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
   color: var(--text-2);
-  transition: color var(--transition), background var(--transition);
+  transition: color var(--transition), background var(--transition), box-shadow var(--transition);
 }
 .nav-link:hover,
 .nav-link.active {
   color: var(--white);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .nav-actions {
