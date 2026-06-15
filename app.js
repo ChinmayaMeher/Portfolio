@@ -1,7 +1,3 @@
-/* =============================================
-   CHINMAYA MEHER — Portfolio Advanced JS (FIXED)
-   ============================================= */
-
 // ---- Custom Cursor ----
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorRing = document.querySelector(".cursor-ring");
