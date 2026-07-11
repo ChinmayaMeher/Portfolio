@@ -1,3 +1,13 @@
+// ---- Skeleton Loader ----
+window.addEventListener("load", () => {
+  const skeletonLoader = document.getElementById("skeleton-loader");
+  if (skeletonLoader) {
+    setTimeout(() => {
+      skeletonLoader.classList.add("hidden");
+    }, 500);
+  }
+});
+
 // ---- Custom Cursor ----
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorRing = document.querySelector(".cursor-ring");
