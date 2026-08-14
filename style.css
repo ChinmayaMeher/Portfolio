@@ -1687,3 +1687,7 @@ body.cursor-hover .cursor-ring {
 ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border); }
 
+
+/* 2. Backdrop Blur Navbar */
+.navbar { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(5, 5, 5, 0.8); }
+
