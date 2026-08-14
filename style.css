@@ -1741,3 +1741,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 /* 13. Subtle Text Gradients */
 .section-title em { background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
+
+/* 14. Timeline Dot Animation */
+.tl-dot { transition: transform var(--transition), box-shadow var(--transition); }
+.timeline-item:hover .tl-dot { transform: scale(1.2); box-shadow: 0 0 15px var(--accent-glow); }
+
