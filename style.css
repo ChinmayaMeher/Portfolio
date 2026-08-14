@@ -1680,3 +1680,10 @@ body.cursor-hover .cursor-ring {
 }
 
 /* === ADDED FOR SMOOTHNESS & POLISH === */
+
+/* 1. Custom Smooth Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border); }
+
