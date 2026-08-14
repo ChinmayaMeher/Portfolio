@@ -1703,3 +1703,8 @@ body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; 
 /* 5. Focus-Visible Outlines */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; transition: outline-offset 0.2s ease; }
 
+
+/* 6. Card Hover Scaling */
+.project-card { transition: transform var(--transition), box-shadow var(--transition); }
+.project-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 12px 24px rgba(0,0,0,0.4); }
+
