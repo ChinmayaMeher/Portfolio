@@ -1723,3 +1723,8 @@ body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; 
 .filter-btn { transition: background var(--transition), color var(--transition), transform var(--transition); }
 .filter-btn:active { transform: scale(0.95); }
 
+
+/* 10. Button Ripple/Glow Effect */
+.btn-primary { transition: all var(--transition); position: relative; overflow: hidden; }
+.btn-primary:hover { box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-2px); }
+
