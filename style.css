@@ -1751,3 +1751,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .skill-pills span { transition: transform var(--transition), background var(--transition); }
 .skill-pills span:hover { transform: translateY(-3px); background: var(--surface); }
 
+
+/* 16. Reduce Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
