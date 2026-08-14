@@ -1733,3 +1733,7 @@ body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; 
 .contact-item { transition: transform var(--transition), background var(--transition); }
 .contact-item:hover { transform: translateX(8px); background: var(--surface); }
 
+
+/* 12. Section Padding Adjustments */
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
