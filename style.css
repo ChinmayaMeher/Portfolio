@@ -802,7 +802,7 @@ body.cursor-hover .cursor-ring {
    ABOUT
    ========================== */
 .about {
-  background: var(--bg-2);
+  background: linear-gradient(to bottom, var(--bg) 0%, var(--bg-2) 15%, var(--bg-2) 100%);
 }
 .about-grid {
   display: grid;
