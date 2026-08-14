@@ -1746,3 +1746,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .tl-dot { transition: transform var(--transition), box-shadow var(--transition); }
 .timeline-item:hover .tl-dot { transform: scale(1.2); box-shadow: 0 0 15px var(--accent-glow); }
 
+
+/* 15. Skill Pill Hover Effect */
+.skill-pills span { transition: transform var(--transition), background var(--transition); }
+.skill-pills span:hover { transform: translateY(-3px); background: var(--surface); }
+
