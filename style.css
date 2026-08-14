@@ -1728,3 +1728,8 @@ body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; 
 .btn-primary { transition: all var(--transition); position: relative; overflow: hidden; }
 .btn-primary:hover { box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-2px); }
 
+
+/* 11. Smooth Form/Contact Links */
+.contact-item { transition: transform var(--transition), background var(--transition); }
+.contact-item:hover { transform: translateX(8px); background: var(--surface); }
+
