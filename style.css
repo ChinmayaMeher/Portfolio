@@ -1695,3 +1695,7 @@ body.cursor-hover .cursor-ring {
 /* 3. Text Rendering Optimization */
 body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
+
+/* 4. Selection Styling */
+::selection { background: var(--accent-glow); color: var(--accent); }
+
