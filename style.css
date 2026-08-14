@@ -1737,3 +1737,7 @@ body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; 
 /* 12. Section Padding Adjustments */
 html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 
+
+/* 13. Subtle Text Gradients */
+.section-title em { background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
