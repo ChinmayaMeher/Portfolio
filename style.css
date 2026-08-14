@@ -1713,3 +1713,8 @@ body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; 
 .card-img-wrap img { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 .project-card:hover .card-img-wrap img { transform: scale(1.05); }
 
+
+/* 8. Social Icons Rotation */
+.social-icon { transition: transform var(--transition), color var(--transition), background var(--transition); }
+.social-icon:hover { transform: translateY(-3px) rotate(8deg); }
+
