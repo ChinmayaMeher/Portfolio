@@ -1757,3 +1757,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 100px; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
+
+/* 17. Hero Photo Glow Animation */
+@keyframes smoothPulse { 0% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } 100% { opacity: 0.5; transform: scale(1); } }
+.photo-glow { animation: smoothPulse 4s infinite ease-in-out; }
+
