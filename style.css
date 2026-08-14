@@ -1699,3 +1699,7 @@ body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; 
 /* 4. Selection Styling */
 ::selection { background: var(--accent-glow); color: var(--accent); }
 
+
+/* 5. Focus-Visible Outlines */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; transition: outline-offset 0.2s ease; }
+
