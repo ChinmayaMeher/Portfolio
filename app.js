@@ -11,6 +11,7 @@ window.addEventListener("load", () => {
 // ---- Custom Cursor ----
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorRing = document.querySelector(".cursor-ring");
+// Keep track of mouse and ring positions for smooth animation
 let mouseX = 0,
   mouseY = 0,
   ringX = 0,
