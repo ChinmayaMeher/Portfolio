@@ -1,3 +1,5 @@
+"use strict";
+
 // ---- Skeleton Loader ----
 window.addEventListener("load", () => {
   const skeletonLoader = document.getElementById("skeleton-loader");
