@@ -7,7 +7,7 @@ import {
   useScroll,
   useTransform,
   useMotionValueEvent,
-  AnimatePresence,
+  MotionValue,
 } from "framer-motion";
 import {
   Calendar,
@@ -30,134 +30,87 @@ const CATEGORIES: CertificateCategory[] = [
 ];
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   DeckViewer
-   ─────────────────────────────────────────────────────────────────────────────
-   Layout:
-     • Outer div — provides the scroll height (n × 60vh) to drive animation
-     • Inner sticky div — stays fixed in viewport while outer is scrolled
-     • All cert cards — absolutely stacked on top of each other inside sticky
-   
-   Each card's visual state is determined by  delta = index − activeIndex:
-     delta = 0   →  active card (front, full size)
-     delta = -1  →  one behind, scaled 0.94, peeking up  -20px
-     delta = -2  →  two behind, scaled 0.88, peeking -40px
-     delta < -4  →  hidden (too deep in stack)
-     delta > 0   →  upcoming, starts from below (translateY: 100%)
+   DeckCard — visual state driven entirely by continuous MotionValues
+   (no React state = no jumpy re-renders when scrolling up/down)
    ──────────────────────────────────────────────────────────────────────────── */
-function DeckViewer({
-  cards,
+function DeckCard({
+  cert,
+  index,
+  n,
+  scrollYProgress,
+  activeIndex,
   onOpen,
 }: {
-  cards: Certificate[];
+  cert: Certificate;
+  index: number;
+  n: number;
+  scrollYProgress: MotionValue<number>;
+  activeIndex: number;
   onOpen: (c: Certificate) => void;
 }) {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const n = cards.length;
+  /*
+   * delta = continuous position relative to the "active" card.
+   *   delta = 0  → this card is active (front, full size)
+   *   delta < 0  → this card is behind/under the active card
+   *   delta > 0  → this card is upcoming (hidden below, not yet arrived)
+   *
+   * At scroll=0: card[0] has delta=0, card[1] has delta=1, card[n-1] has delta=n-1
+   * At scroll=1: card[0] has delta=-(n-1), card[n-1] has delta=0
+   */
+  const delta = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [index, index - (n - 1)]
+  );
 
-  // Drive activeIndex from container scroll progress
-  const { scrollYProgress } = useScroll({
-    target: outerRef,
-    offset: ["start start", "end end"],
-  });
+  // Scale: 1.0 (active) → 0.94 → 0.88 → 0.82 … (linearly smaller per step behind)
+  const scale = useTransform(
+    delta,
+    [-6, -5, -4, -3, -2, -1, 0, 1],
+    [0.64, 0.70, 0.76, 0.82, 0.88, 0.94, 1.0, 1.0]
+  );
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(Math.floor(v * n), n - 1);
-    setActiveIndex(idx);
-  });
+  // Y: cards behind peek upward; upcoming cards wait just below
+  const y = useTransform(
+    delta,
+    [-5, -4, -3, -2, -1, 0, 0.35, 1],
+    [-110, -88, -66, -44, -22, 0, 40, 70]
+  );
+
+  // Opacity: active=1, behind fades, upcoming hidden then fades in
+  const opacity = useTransform(
+    delta,
+    [-6, -4.5, -3, -2, -1, 0, 0.2, 0.5],
+    [0, 0.12, 0.35, 0.55, 0.78, 1, 0.45, 0]
+  );
+
+  // Blur amount (px) for deeply buried cards
+  const blurPx = useTransform(delta, [-5, -3, -2, -1, 0], [5, 3, 1.5, 0, 0]);
+  const filter = useTransform(blurPx, (v) => `blur(${v.toFixed(1)}px)`);
+
+  // z-index: only used to ensure active card renders on top.
+  // Derived from discrete activeIndex (only for stacking order).
+  const zIndex = n + 10 - Math.abs(index - activeIndex);
 
   return (
-    // Outer scroll driver — its height determines how long the deck animation runs
-    <div ref={outerRef} style={{ height: `${n * 60}vh` }}>
-      {/* Sticky viewport window — stays on screen during scroll */}
-      <div className="sticky top-24 h-[75vh] flex items-center justify-center overflow-visible">
-        {/* Deck container — all cards positioned absolutely inside */}
-        <div className="relative w-full" style={{ height: "420px" }}>
-          {cards.map((cert, index) => {
-            const delta = index - activeIndex; // negative = behind, 0 = active, positive = upcoming
-
-            // ── Derived visual properties ──────────────────────────────
-            // Scale: each step behind = 6% smaller (linear increase toward front)
-            const scaleVal =
-              delta === 0
-                ? 1
-                : delta < 0
-                ? Math.max(0.65, 1 + delta * 0.06)
-                : 1;
-
-            // Y offset: cards behind peek upward, upcoming hidden below
-            const yVal =
-              delta === 0
-                ? 0
-                : delta < 0
-                ? Math.max(-120, delta * 22) // peek: -22px, -44px, -66px …
-                : 60; // upcoming cards wait below (slightly, then slide in)
-
-            // Opacity: front is 1, each step behind reduces by 0.18
-            const opacityVal =
-              delta === 0
-                ? 1
-                : delta < 0
-                ? Math.max(0.2, 1 + delta * 0.18)
-                : 0; // hide upcoming until their turn
-
-            // z-index: active card is on top, previous cards go deeper
-            const zIndexVal = delta === 0 ? n + 10 : n - Math.abs(delta);
-
-            // Blur: slight blur for deeply buried cards
-            const blurVal =
-              delta < -2 ? `blur(${Math.min(4, Math.abs(delta + 2))}px)` : "none";
-
-            // Show max 4 cards behind, hide rest (avoid DOM clutter)
-            const isVisible = delta >= -4 && delta === 0 || delta < 0;
-            const isUpcoming = delta > 0;
-
-            return (
-              <motion.div
-                key={cert.id}
-                animate={{
-                  scale: scaleVal,
-                  y: yVal,
-                  opacity: isUpcoming ? 0 : opacityVal,
-                  filter: blurVal,
-                  zIndex: zIndexVal,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 35,
-                  mass: 0.8,
-                }}
-                style={{ position: "absolute", width: "100%", zIndex: zIndexVal }}
-                className="will-change-transform"
-              >
-                <CertCard cert={cert} onOpen={onOpen} index={index} total={n} />
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Progress dots */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col space-y-2 pr-2">
-          {cards.map((_, i) => (
-            <div
-              key={i}
-              className={`w-1.5 rounded-full transition-all duration-300 ${
-                i === activeIndex
-                  ? "h-5 bg-accent"
-                  : i < activeIndex
-                  ? "h-2 bg-accent/40"
-                  : "h-2 bg-neutral-700"
-              }`}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <motion.div
+      style={{
+        scale,
+        y,
+        opacity,
+        filter,
+        zIndex,
+        position: "absolute",
+        width: "100%",
+        transformOrigin: "top center",
+      }}
+    >
+      <CertCard cert={cert} onOpen={onOpen} index={index} total={n} />
+    </motion.div>
   );
 }
 
-/* ─── Individual certificate card layout ─── */
+/* ─── Card layout ─── */
 function CertCard({
   cert,
   onOpen,
@@ -171,11 +124,11 @@ function CertCard({
 }) {
   return (
     <div className="w-full rounded-3xl overflow-hidden border border-[#252525] shadow-2xl shadow-black/80 bg-gradient-to-br from-[#141414] via-[#0f0f0f] to-[#090909] group hover:border-accent/50 transition-colors duration-300">
-      {/* Accent top line */}
+      {/* Accent line */}
       <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-accent/50 to-transparent group-hover:via-accent transition-all duration-500" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 p-6 sm:p-7 lg:p-8 items-center">
-        {/* Left — Certificate image */}
+        {/* Certificate image */}
         <div
           onClick={() => onOpen(cert)}
           className="lg:col-span-6 relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-800 cursor-pointer hover:border-accent/40 transition-colors"
@@ -187,22 +140,19 @@ function CertCard({
             sizes="(max-width: 1024px) 100vw, 560px"
             className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
           />
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2 text-accent text-sm font-mono font-medium backdrop-blur-xs">
+          <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2 text-accent text-sm font-mono font-medium">
             <Eye className="w-5 h-5" />
             <span>Click to View</span>
           </div>
-          {/* Category badge */}
-          <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 border border-neutral-700 text-xs font-mono text-neutral-300 backdrop-blur-md">
+          <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 border border-neutral-700 text-xs font-mono text-neutral-300">
             {cert.category}
           </div>
-          {/* Numbered badge */}
           <div className="absolute bottom-3 right-3 w-7 h-7 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center text-accent text-xs font-bold font-mono">
             {index + 1}
           </div>
         </div>
 
-        {/* Right — Details */}
+        {/* Details */}
         <div className="lg:col-span-6 flex flex-col justify-between space-y-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
@@ -273,6 +223,72 @@ function CertCard({
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   DeckViewer — scroll driver + sticky viewport
+   ──────────────────────────────────────────────────────────────────────────── */
+function DeckViewer({
+  cards,
+  onOpen,
+}: {
+  cards: Certificate[];
+  onOpen: (c: Certificate) => void;
+}) {
+  const outerRef = useRef<HTMLDivElement>(null);
+  // activeIndex is ONLY used for z-index ordering (discrete is fine for that)
+  const [activeIndex, setActiveIndex] = useState(0);
+  const n = cards.length;
+
+  const { scrollYProgress } = useScroll({
+    target: outerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Update z-index order when crossing card boundaries
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const idx = Math.min(Math.floor(v * n), n - 1);
+    setActiveIndex(idx);
+  });
+
+  return (
+    // Outer div provides scroll height: n cards × 60vh each
+    <div ref={outerRef} style={{ height: `${n * 60}vh` }}>
+      {/* Sticky viewport: stays on screen while outer scrolls */}
+      <div className="sticky top-20 h-[78vh] flex items-center">
+        {/* Deck: all cards stacked at same absolute position */}
+        <div className="relative w-full" style={{ height: "420px" }}>
+          {cards.map((cert, i) => (
+            <DeckCard
+              key={cert.id}
+              cert={cert}
+              index={i}
+              n={n}
+              scrollYProgress={scrollYProgress}
+              activeIndex={activeIndex}
+              onOpen={onOpen}
+            />
+          ))}
+        </div>
+
+        {/* Side progress indicator */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-2 pr-1">
+          {cards.map((_, i) => (
+            <div
+              key={i}
+              className={`w-1.5 rounded-full transition-all duration-300 ${
+                i === activeIndex
+                  ? "h-5 bg-accent shadow-glow-sm"
+                  : i < activeIndex
+                  ? "h-2 bg-accent/40"
+                  : "h-2 bg-neutral-700"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
    Main Certifications Section
    ──────────────────────────────────────────────────────────────────────────── */
 export default function Certifications() {
@@ -312,7 +328,7 @@ export default function Certifications() {
       className="pt-24 pb-16 relative bg-background border-t border-[#181818]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ── Header ── */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -332,12 +348,9 @@ export default function Certifications() {
               <span className="italic font-serif text-accent">Certifications</span>
             </h2>
             {viewMode === "stacked" && (
-              <p className="text-muted text-sm mt-3 flex items-center space-x-2">
+              <p className="text-muted text-sm mt-3 flex items-center space-x-1.5">
                 <span>↓</span>
-                <span>
-                  Scroll through this section — each card slides to the front
-                  of the deck.
-                </span>
+                <span>Scroll to flip through the deck — works both ways.</span>
               </p>
             )}
           </div>
@@ -350,7 +363,7 @@ export default function Certifications() {
                 <button
                   key={mode}
                   onClick={() => setViewMode(mode)}
-                  className={`relative flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-colors z-10 ${
+                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                     viewMode === mode
                       ? "bg-accent text-black font-semibold"
                       : "text-muted hover:text-white"
@@ -368,34 +381,30 @@ export default function Certifications() {
 
             {/* Category filter */}
             <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-surface border border-surfaceBorder">
-              {CATEGORIES.map((cat) => {
-                const isActive = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                      isActive
-                        ? "bg-neutral-700 text-white border border-neutral-600 font-semibold"
-                        : "text-muted hover:text-white"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                    selectedCategory === cat
+                      ? "bg-neutral-700 text-white border border-neutral-600 font-semibold"
+                      : "text-muted hover:text-white"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
         </motion.div>
 
-        {/* ── Views ── */}
+        {/* Views */}
         {viewMode === "stacked" ? (
           <DeckViewer
             cards={filteredCertificates}
             onOpen={setActiveCertificate}
           />
         ) : (
-          /* Grid view */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCertificates.map((cert, idx) => (
               <motion.div
@@ -442,10 +451,7 @@ export default function Certifications() {
                   <div className="pt-2 border-t border-surfaceBorder/80">
                     <div className="flex flex-wrap gap-1.5">
                       {cert.skills.slice(0, 3).map((skill) => (
-                        <span
-                          key={skill}
-                          className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-900 border border-neutral-800 text-neutral-400"
-                        >
+                        <span key={skill} className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-900 border border-neutral-800 text-neutral-400">
                           {skill}
                         </span>
                       ))}
@@ -463,7 +469,6 @@ export default function Certifications() {
         )}
       </div>
 
-      {/* Lightbox */}
       <CertificateLightbox
         isOpen={Boolean(activeCertificate)}
         certificate={activeCertificate}
