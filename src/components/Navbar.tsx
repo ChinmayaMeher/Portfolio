@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X, Download, ExternalLink } from "lucide-react";
 import { PERSONAL_INFO } from "@/data/personal";
 import { getAssetPath } from "@/lib/basePath";
+import { useCvModal } from "@/context/CvModalContext";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home" },
@@ -17,6 +18,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Navbar() {
+  const { openCvModal } = useCvModal();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -100,14 +102,14 @@ export default function Navbar() {
 
         {/* CTA & Mobile Hamburger */}
         <div className="flex items-center space-x-3">
-          <a
-            href={getAssetPath(PERSONAL_INFO.cvPath)}
-            download
-            className="hidden sm:inline-flex items-center space-x-2 text-xs font-semibold px-4 py-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-black hover:shadow-glow transition-all duration-300"
+          <button
+            type="button"
+            onClick={openCvModal}
+            className="hidden sm:inline-flex items-center space-x-2 text-xs font-semibold px-4 py-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-black hover:shadow-glow transition-all duration-300 cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Download CV</span>
-          </a>
+          </button>
 
           {/* Hamburger Button */}
           <button
@@ -152,14 +154,17 @@ export default function Navbar() {
           </div>
 
           <div className="pt-6 border-t border-[#202020]">
-            <a
-              href={getAssetPath(PERSONAL_INFO.cvPath)}
-              download
-              className="w-full py-3 rounded-xl flex items-center justify-center space-x-2 text-sm font-semibold bg-accent text-black hover:bg-accent-hover transition-colors shadow-glow"
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                openCvModal();
+              }}
+              className="w-full py-3 rounded-xl flex items-center justify-center space-x-2 text-sm font-semibold bg-accent text-black hover:bg-accent-hover transition-colors shadow-glow cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>Download CV</span>
-            </a>
+            </button>
           </div>
         </div>
       )}

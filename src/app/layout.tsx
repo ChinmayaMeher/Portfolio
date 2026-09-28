@@ -63,6 +63,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { CvModalProvider } from "@/context/CvModalContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -71,7 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${firaCode.variable} scroll-smooth dark`}>
       <body className="min-h-screen bg-background text-neutral-100 antialiased selection:bg-accent/20 selection:text-accent font-sans">
-        {children}
+        <CvModalProvider>{children}</CvModalProvider>
       </body>
     </html>
   );

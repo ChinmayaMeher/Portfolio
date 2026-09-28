@@ -42,3 +42,11 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #00e599;
 }
+
+/* Security Protection for CV Viewer: Block printing */
+@media print {
+  body {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

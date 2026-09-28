@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { PERSONAL_INFO } from "@/data/personal";
 import { getAssetPath } from "@/lib/basePath";
+import { useCvModal } from "@/context/CvModalContext";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -35,6 +36,7 @@ const itemVariants = {
 };
 
 export default function Hero() {
+  const { openCvModal } = useCvModal();
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -140,14 +142,14 @@ export default function Hero() {
                 <span>View My Work</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
-              <a
-                href={getAssetPath(PERSONAL_INFO.cvPath)}
-                download
-                className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-surface border border-surfaceBorder text-white text-sm font-medium hover:border-neutral-600 hover:bg-surfaceHover transition-all duration-200"
+              <button
+                type="button"
+                onClick={openCvModal}
+                className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-surface border border-surfaceBorder text-white text-sm font-medium hover:border-neutral-600 hover:bg-surfaceHover transition-all duration-200 cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span>Download CV</span>
-              </a>
+              </button>
               <a
                 href="#contact"
                 className="inline-flex items-center px-6 py-3.5 rounded-xl text-muted text-sm font-medium hover:text-white transition-colors"
