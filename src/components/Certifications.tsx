@@ -290,7 +290,7 @@ export default function Certifications() {
         {viewMode === "stacked" ? (
           <div
             ref={stackContainerRef}
-            style={{ height: `${filteredCertificates.length * 85}vh` }}
+            style={{ height: `${filteredCertificates.length * 42}vh` }}
           >
             <div className="space-y-0">
               {filteredCertificates.map((cert, index) => (
