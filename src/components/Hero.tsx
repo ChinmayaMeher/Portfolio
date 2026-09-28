@@ -81,11 +81,11 @@ export default function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
 
-          {/* Left Column — Text */}
+          {/* Left Column — Text (order-2 on mobile = below image; order-1 on desktop = left) */}
           <motion.div
-            className="lg:col-span-7 text-left space-y-6"
+            className="lg:col-span-7 text-left space-y-5 order-2 lg:order-1"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -181,27 +181,28 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column — Visual */}
+          {/* Right Column — Visual (order-1 on mobile = ABOVE text; order-2 on desktop = right) */}
           <motion.div
-            className="lg:col-span-5 flex justify-center items-center"
+            className="lg:col-span-5 flex justify-center items-center order-1 lg:order-2"
             initial={{ opacity: 0, scale: 0.88 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+            {/* Mobile: compact w-36, tablet: w-56, desktop: w-96 */}
+            <div className="relative w-36 h-36 sm:w-56 sm:h-56 lg:w-96 lg:h-96">
               <div
                 className="absolute inset-0 rounded-full border border-dashed border-accent/20 animate-spin"
                 style={{ animationDuration: "30s" }}
               />
               <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-accent/20 via-transparent to-accent/10 blur-xl" />
 
-              <div className="relative w-full h-full rounded-3xl overflow-hidden border-2 border-surfaceBorder bg-surface p-2 shadow-2xl group hover:border-accent/50 transition-colors duration-500">
+              <div className="relative w-full h-full rounded-3xl overflow-hidden border-2 border-surfaceBorder bg-surface p-1.5 shadow-2xl group hover:border-accent/50 transition-colors duration-500">
                 <div className="w-full h-full rounded-2xl overflow-hidden relative bg-neutral-900">
                   <Image
                     src={getAssetPath(PERSONAL_INFO.profilePhoto)}
                     alt={PERSONAL_INFO.name}
                     fill
-                    sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+                    sizes="(max-width: 640px) 144px, (max-width: 1024px) 224px, 384px"
                     priority
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
@@ -210,21 +211,21 @@ export default function Hero() {
 
               {/* Floating badge — Dev */}
               <motion.div
-                className="absolute -top-3 -left-3 sm:-left-6 px-3.5 py-1.5 rounded-xl bg-surface/90 border border-surfaceBorder backdrop-blur-md shadow-lg flex items-center space-x-2 text-xs font-mono text-white"
+                className="absolute -top-2 -left-2 sm:-top-3 sm:-left-5 px-2 py-1 sm:px-3.5 sm:py-1.5 rounded-xl bg-surface/90 border border-surfaceBorder backdrop-blur-md shadow-lg flex items-center space-x-1.5 text-[10px] sm:text-xs font-mono text-white"
                 animate={{ y: [0, -8, 0] }}
                 transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
               >
-                <Code2 className="w-4 h-4 text-accent" />
+                <Code2 className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
                 <span>Full-Stack</span>
               </motion.div>
 
               {/* Floating badge — AI/ML */}
               <motion.div
-                className="absolute -bottom-3 -right-3 sm:-right-6 px-3.5 py-1.5 rounded-xl bg-surface/90 border border-surfaceBorder backdrop-blur-md shadow-lg flex items-center space-x-2 text-xs font-mono text-white"
+                className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-5 px-2 py-1 sm:px-3.5 sm:py-1.5 rounded-xl bg-surface/90 border border-surfaceBorder backdrop-blur-md shadow-lg flex items-center space-x-1.5 text-[10px] sm:text-xs font-mono text-white"
                 animate={{ y: [0, 8, 0] }}
                 transition={{ repeat: Infinity, duration: 5, delay: 2, ease: "easeInOut" }}
               >
-                <Brain className="w-4 h-4 text-accent" />
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
                 <span>AI / ML</span>
               </motion.div>
             </div>
