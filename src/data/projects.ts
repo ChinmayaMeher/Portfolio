@@ -104,4 +104,15 @@ export const PROJECTS: Project[] = [
     liveUrl: "https://chinmayameher.github.io/Digital-Calculator/",
     githubUrl: "https://github.com/ChinmayaMeher/Digital-Calculator",
   },
+  {
+    id: "working-progress",
+    title: "Working progress",
+    description:
+      "working progress.",
+    category: "frontend",
+    tags: ["xxxx", "xxxx", "xxxx"],
+    image: "/image/working_progress.png",
+    liveUrl: "",
+    githubUrl: "",
+  },
 ];
