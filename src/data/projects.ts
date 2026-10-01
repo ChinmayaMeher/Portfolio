@@ -100,7 +100,7 @@ export const PROJECTS: Project[] = [
       "Fully functional digital calculator with arithmetic expressions, keyboard listener support, backspace, and clean dark UI.",
     category: "frontend",
     tags: ["HTML5", "CSS3", "JavaScript"],
-    image: "/image/Calculator_UI.png",
+    image: "/image/Calculator_ui.png",
     liveUrl: "https://chinmayameher.github.io/Digital-Calculator/",
     githubUrl: "https://github.com/ChinmayaMeher/Digital-Calculator",
   },
