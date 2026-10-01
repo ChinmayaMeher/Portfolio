@@ -111,7 +111,7 @@ export const PROJECTS: Project[] = [
       "working progress.",
     category: "frontend",
     tags: ["xxxx", "xxxx", "xxxx"],
-    image: "/image/working_progress.png",
+    image: "/image/Work_in_Progress.png",
     liveUrl: "",
     githubUrl: "",
   },
